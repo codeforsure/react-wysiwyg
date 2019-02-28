@@ -1,0 +1,67 @@
+
+.post {
+  box-sizing: border-box;
+    width: 100%; /* or less */
+    display: inline-block;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 4px;
+    background: #FFFFFF;
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.post2 {
+  box-sizing: border-box;
+    width: 100%; /* or less */
+    display: inline-block;
+    /* border: 1px solid ; */
+    border-radius: 5px;
+    margin: 4px;
+    background:#F0FFFF;
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/* }
+.post3 {
+
+    background: #ccc;
+
+} */
+.post button{
+  padding:10px;
+  float :right;
+  border: none;
+background: none;
+text-decoration: underline;
+cursor:grab;
+font-family: "Lucida Grande", Geneva, Verdana, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: blue;
+}
+.b{
+  margin-top: 4px;
+  margin-left: 10px;
+  margin-right: 15px;
+}
+
+.post h3 {
+	margin: 10px;
+  box-sizing: border-box;
+    width: 50%; /* or less */
+    display: inline-block
+}
+.post3 h3 {
+  padding-left: 30px;
+  text-transform: capitalize;
+}
+.post2 p {
+	padding: 10px;
+  text-indent: 30px;
+  font-size: 120%;
+  font-style: oblique;
+  font-family:serif;
+  text-transform: capitalize;
+  line-height: 30px;
+}
+.post1{
+    padding-left: 20px;
+}
