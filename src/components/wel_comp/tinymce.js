@@ -47,11 +47,9 @@ class Complainttiny extends React.Component {
     if(this.state.update){
       var id = read_cookie('complaint_id');
       console.log(id);
-      alert('complaint-'+id+'  Successfully updated');
       this.props.updateComplaint(id,this.state.content,this.state.summary);
     }
     else{
-      alert('complaint Successfully submited');
       this.props.Complaints(this.state.content,this.state.summary);
     }
   }
@@ -59,10 +57,18 @@ class Complainttiny extends React.Component {
     let {isComplaintSuccess,complaintError,isUpdateSuccess,updateError} = this.props;
     return (
       <div className= 'editor' align='center' onSubmit ={this.onSubmit}>
-      {isComplaintSuccess&&<div>{window.location.reload()}</div>}
-      {isUpdateSuccess&&<div>{window.location.reload()}</div>}
-      {complaintError&&this.props.logout()&&<div><Redirect to={"/error"} /></div>}
-      {updateError&&this.props.logout()&&<div><Redirect to={"/error"} /></div>}
+        {isComplaintSuccess&&alert('complaint Successfully submited')}
+        {isComplaintSuccess&&<div>{window.location.reload()}</div>}
+        {isComplaintSuccess&&<div><Redirect to='/welcome/allcomplaint'/></div>}
+        {isUpdateSuccess&&alert('complaint Successfully updated')}
+        {isUpdateSuccess&&<div>{window.location.reload()}</div>}
+        {isUpdateSuccess&&<div><Redirect to='/welcome/allcomplaint'/></div>}
+        {complaintError&&alert('cannot register complaint')}
+        {complaintError&&this.props.logout()}
+        {complaintError&&<div><Redirect to={"/error"} /></div>}
+        {updateError&&alert('cannot update complaint')}
+        {updateError&&this.props.logout()}
+        {updateError&&<div><Redirect to={"/error"} /></div>}
       <h1 align='center'>Drop Your Content Here</h1>
       <form className= 'editor1'>
       <h3 align='left'>SUMMARY:</h3>
