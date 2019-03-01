@@ -109,7 +109,6 @@ const mapDispatchToProps = (dispatch) => {
     Complaints :(complaint,summary)=>{dispatch(Complaints(complaint,summary))},
     updateComplaint:(id,complaint,summary)=>{dispatch(updateComplaint(id,complaint,summary))},
     logout :()=>{
-      bake_cookie('login',false);
       delete_cookie('json_response');
       const action ={type:'LOGOUT_SUCESS',isLogoutSuccess : true};
       dispatch(action);
