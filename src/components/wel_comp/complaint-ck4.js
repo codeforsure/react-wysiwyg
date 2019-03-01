@@ -59,10 +59,6 @@ class Complaintck4 extends  Component{
     return (
       <div className= 'editor' align='center' onSubmit ={this.onSubmit}>
       <form className= 'editor1'>
-      {isComplaintSuccess&&<div>{window.location.reload()}</div>}
-      {isUpdateSuccess&&<div><Redirect to='/welcome/allcomplaint'/></div>}
-      {complaintError&&this.props.logout()&&<div><Redirect to={"/error"} /></div>}
-      {updateError&&this.props.logout()&&<div><Redirect to={"/error"} /></div>}
       <h1 align='center'>Drop Your Content Here</h1>
         <h3 align='left'>SUMMARY:</h3>
         <input type='text' className= 'input1' maxlength="200" onChange={this.onChangesum} placeholder="enter summary ........." required/>
@@ -71,6 +67,18 @@ class Complaintck4 extends  Component{
         data={this.state.content}
         onChange={this.onChange}
         config={{
+          {isComplaintSuccess&&alert('complaint Successfully submited')}
+          {isComplaintSuccess&&<div>{window.location.reload()}</div>}
+          {isComplaintSuccess&&<div><Redirect to='/welcome/allcomplaint'/></div>}
+          {isUpdateSuccess&&alert('complaint Successfully updated')}
+          {isUpdateSuccess&&<div>{window.location.reload()}</div>}
+          {isUpdateSuccess&&<div><Redirect to='/welcome/allcomplaint'/></div>}
+          {complaintError&&alert('cannot register complaint')}
+          {complaintError&&this.props.logout()}
+          {complaintError&&<div><Redirect to={"/error"} /></div>}
+          {updateError&&alert('cannot update complaint')}
+          {updateError&&this.props.logout()}
+          {updateError&&<div><Redirect to={"/error"} /></div>}
            height:'300px',
            width:'100%',
 

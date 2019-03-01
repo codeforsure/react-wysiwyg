@@ -54,7 +54,6 @@ class AllComplaints extends React.Component{
   onclick=(e)=>{
     e.preventDefault();
     console.log(e.target.id);
-    alert('You sure!!! want to delete compliaint-'+e.target.id);
     this.props.deleteComplaint(e.target.id);
   }
   handleView=(e)=>{
@@ -81,7 +80,8 @@ class AllComplaints extends React.Component{
           {viewopen&&<Redirect to= "/welcome/tinymce"/>}
           {error&&this.props.logout()}
           {error&&<Redirect to= "/error"/>}
-          {this.props.isDeleteSuccess&& <div><h1>Complaint Deleted</h1>{window.location.reload()}</div>}
+          {this.props.isDeleteSuccess&&alert('complaint Successfully deleted')}
+          {this.props.isDeleteSuccess&& <div>{window.location.reload()}</div>}
           {complaints.length?
         <div>
         {obj.sort((a,b)=>(a.complaint_id<b.complaint_id)?1:-1).map(complaint=>(

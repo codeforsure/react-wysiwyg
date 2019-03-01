@@ -80,7 +80,8 @@ export default function reducer(state=initialState,action) {
     delete_cookie('json response');
     return{
       ...initialState,
-      isLogoutSuccess : action.isLogoutSuccess
+      isLogoutSuccess : action.isLogoutSuccess,
+      isLoginSuccess : false
     };
     default:
       return state;
