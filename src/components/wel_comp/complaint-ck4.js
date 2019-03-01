@@ -46,11 +46,9 @@ class Complaintck4 extends  Component{
     if(this.state.update){
       var id = read_cookie('complaint_id');
       console.log(id);
-      alert('complaint-'+id+'  Successfully updated');
       this.props.updateComplaint(id,this.state.content,this.state.summary);
     }
     else{
-      alert('complaint Successfully submited');
       this.props.Complaints(this.state.content,this.state.summary);
     }
   }
