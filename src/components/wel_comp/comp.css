@@ -30,11 +30,11 @@
   padding:10px;
   float :right;
   border: none;
-background: none;
-text-decoration: underline;
-cursor:grab;
-font-family: "Lucida Grande", Geneva, Verdana, Arial, Helvetica, sans-serif;
-  font-size: 13px;
+  background: none;
+  text-decoration: underline;
+  cursor:grab;
+  font-family: "Lucida Grande", Geneva, Verdana, Arial, Helvetica, sans-serif;
+  font-size: 16px;
   color: blue;
 }
 .b{
