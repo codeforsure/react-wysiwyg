@@ -3,6 +3,9 @@ import { read_cookie } from 'sfcookies'
 
 const accessToken = read_cookie('json_response')
 const bearer = 'Bearer '+accessToken;
+const register={
+  userName:read_cookie('name'),
+}
 function setComplaintSuccess(isComplaintSuccess)
 {
     return{
@@ -113,7 +116,8 @@ function updateRequest(id,complaint,summary){
      body: JSON.stringify({
       "complaint_id": id,
       "complaint" : complaint,
-      "summary":summary
+      "summary":summary,
+      "register":register,
     })
   }).then((res)=>{
     console.log('update response',res)
@@ -137,7 +141,8 @@ function ComplaintRequest(complaint,summary){
      'Content-Type':'application/json'},
    body: JSON.stringify({
     "complaint": complaint,
-    "summary":summary
+    "summary":summary,
+    "register":register,
   })
 }).then((res) => {
   console.log('json converted');
