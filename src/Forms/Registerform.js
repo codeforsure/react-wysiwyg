@@ -3,6 +3,7 @@ import './forms.css';
 import {Link} from "react-router-dom";
 import { connect } from 'react-redux';
 import { Register } from "../actions/registeraction";
+import {Redirect} from "react-router-dom";
 
 class Registerform extends React.Component {
     state={
@@ -31,7 +32,8 @@ class Registerform extends React.Component {
     return(
           <div className='main'>
            <div className='Mainform' onSubmit ={this.onSubmit}>
-           {this.props.isRegisterSuccess&&<div><p>Successfully Registered</p></div>}
+           {this.props.isRegisterSuccess&&alert('Successfully Registered')}
+           {this.props.isRegisterSuccess&&<Redirect to='/' />}
               <form >
                 <Input type='text' name='Name' placeholder='Full Name' onChange = {this.handleChange} />
                 <Input type='text' name='Email' placeholder='Email' onChange = {this.handleChange}/>

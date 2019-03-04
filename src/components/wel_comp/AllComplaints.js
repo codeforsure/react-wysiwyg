@@ -22,14 +22,19 @@ class AllComplaints extends React.Component{
   componentDidMount(){
     const accessToken = read_cookie('json_response')
     const bearer = 'Bearer '+accessToken;
-    console.log('precheck bearer',bearer);
-    fetch('http://localhost:8080/complaint/add',{
-      method: 'GET',
+    const name = read_cookie('name');
+
+    console.log('precheck bearer name',bearer,"   ",name);
+    fetch('http://localhost:8080/complaint/get',{
+      method: 'POST',
       headers: {
         'Authorization': bearer,
         'Content-Type': 'application/json',
-      }
+      },
+      body:JSON.stringify({
+         "username": name}),
     })
+
       .then(res=>res.json())
       .then(json=>{
         console.log('response complaint',json)
