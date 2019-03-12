@@ -1,12 +1,10 @@
 import React from 'react';
 import './forms.css';
-import Registerform from "./Registerform.js";
-import Welcome from "../components/Welcome.js"
 import {Link} from "react-router-dom";
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from "../actions/useractions";
-import { bake_cookie ,read_cookie } from 'sfcookies';
+import PasswordMask from 'react-password-mask';
 
 class Loginform extends React.Component {;
   state = {
@@ -29,17 +27,33 @@ class Loginform extends React.Component {;
     console.log(isLoginSuccess);
     return(
           <div className='main'>
-          <h1 align="center" >Welcome!! Login here</h1>
            <div className='Mainform' onSubmit ={this.onSubmit}>
-           {isLoginPending&&<div>Please wait....</div>}
-           { loginError&&<div><p>{loginError.message}</p></div>}
+           {isLoginPending&&<div className="loader"></div>}
+           { loginError&&<div className='errors' align='center'>{loginError.message}</div>}
            {isLoginSuccess===true&&<div><Redirect to={"/welcome/home"} /></div>}
               <form  >
-                <Input type='text' name='name' placeholder='username' onChange={this.onChangeName} value={this.state.name}/>
-                <Input type='password' name='password' placeholder='password' onChange={this.onChangepass} value={this.state.password}/>
-                <button className='formbutton' type="submit"> Sign In</button>
+                <header className="header-block">
+                <h1 className="title">Sign in</h1>
+                <h2 className="sub-title">to your account</h2>
+                </header>
+                <Input type='text' name='name' placeholder='Enter username' onChange={this.onChangeName} value={this.state.name}/>
+                  <PasswordMask
+                    id="password"
+                    name="password"
+                    placeholder="Enter password"
+                    value={this.state.password}
+                    onChange={this.onChangepass}
+                    className='Input'
+                    buttonClassName='pshow'
+                  />
+                {isLoginPending?<div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+  :<button className='formbutton' type="submit"> Sign In</button>}
               </form>
-                <p><Link to={"/register"}>Create Account</Link></p>
+                <p className="larger-note">Don't have an account? <Link to={"/register"}>Sign up</Link></p>
            </div>
            </div>
            );

@@ -2,8 +2,8 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import { connect } from 'react-redux';
 import './header.css';
-import { bake_cookie ,read_cookie ,delete_cookie} from 'sfcookies';
-
+import { bake_cookie ,delete_cookie} from 'sfcookies';
+import logo from './default.png';
 function Header(props){
   bake_cookie('login',props.isLoginSuccess);
   bake_cookie('name',props.uname);
@@ -11,13 +11,19 @@ function Header(props){
   return(
     <div className = 'header'>
       <div className="topnav">
-        {props.isLoginSuccess&&<Link to={"/welcome/home"} ><a onClick>Home</a></Link>}
-        {props.isLoginSuccess&&<Link to={"/welcome/ck5"}><a onClick>CKEditor-5</a></Link>}
-        {props.isLoginSuccess&&<Link to={"/welcome/ck4"}><a onClick>CKEditor-4</a></Link>}
-        {props.isLoginSuccess&&<Link to={"/welcome/tinymce"}><a onClick>Tiny-mce</a></Link>}
-        {props.isLoginSuccess&&<Link to={"/welcome/allcomplaint"}><a onClick>All Complaints</a></Link>}
-        <Link  to={"/"} style={{float: 'right'}}><a onClick ={props.onclick}  >Logout </a></Link>
-      </div>
+        <Link className="topnav1" to={"/welcome/home"} >Home</Link>
+        <Link className="topnav1" to={"/welcome/ck4"} >CKEditor-4</Link>
+        <Link className="topnav1" to={"/welcome/tinymce"} >Tiny-mce</Link>
+        <Link className="topnav1" to={"/welcome/allcomplaint"} >All Complaints</Link>
+        <div className="dropdown">
+                <img src={logo} alt="Avatar" className="avatar "/>
+                <button className="dropbtn">{props.uname}  <i className="fa fa-caret-down"></i>
+                </button>
+                <div className="dropdown-content">
+                  <Link  to={"/"} style={{float: 'right'}} className="topnav1" onClick ={props.onclick}  >Logout </Link>
+                </div>
+        </div>
+        </div>
     </div>
   )
 }

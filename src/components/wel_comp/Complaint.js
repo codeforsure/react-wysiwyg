@@ -4,8 +4,6 @@ import './header.css';
 import { Complaints } from "../../actions/complaintaction";
 import { updateComplaint } from "../../actions/complaintaction";
 import { connect } from 'react-redux';
-import AllComplaints from "./AllComplaints";
-import {Link} from "react-router-dom";
 import { read_cookie,bake_cookie,delete_cookie } from 'sfcookies';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';

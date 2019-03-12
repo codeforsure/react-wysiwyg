@@ -1,5 +1,8 @@
 import {read_cookie,delete_cookie } from 'sfcookies'
 const initialState = {
+  register:{
+    userName:'',
+  },
   isLoginPending: false,
   isLoginSuccess: false,
   loginError :null,
@@ -11,13 +14,15 @@ const initialState = {
   isDeleteSuccess:false,
   isUpdateSuccess:false,
   deleteError:null,
+  updateError:null,
   name :'',
   accessToken:'',
 }
 export default function reducer(state=initialState,action) {
   state.isLoginSuccess=read_cookie('login');
   state.name = read_cookie('name');
-  state.accessToken = read_cookie('json_response')
+  state.accessToken = read_cookie('json_response');
+  state.register.userName= read_cookie('name');
   console.log('response',read_cookie('json_response'));
   console.log('cookie',state.isLoginSuccess);
   switch (action.type){
@@ -63,10 +68,21 @@ export default function reducer(state=initialState,action) {
       ...state,
       isDeleteSuccess : action.isDeleteSuccess,
     };
+    case "REFRESH":
+    return{
+      ...initialState,
+      isLoginSuccess: read_cookie('login'),
+      name : read_cookie('name'),
+    };
     case "UPDATE_SUCCESS":
     return{
       ...state,
       isUpdateSuccess : action.isUpdateSuccess,
+    };
+    case "UPDATE_ERROR":
+    return{
+      ...state,
+      updateError : action.updateError,
     };
     case "DELETE_ERROR":
     return{

@@ -7,7 +7,6 @@ import Complaint from "./wel_comp/Complaint";
 import Complaintck4 from "./wel_comp/complaint-ck4";
 import Complainttiny from "./wel_comp/tinymce";
 import AllComplaints from "./wel_comp/AllComplaints";
-import {BrowserRouter,Route,Redirect} from 'react-router-dom';
 
 function Welcome(props){
 
@@ -15,13 +14,13 @@ function Welcome(props){
       <div >
       <div id="myHeader"><Header /></div>
       <div className="row">
-      <PrivateRoute path = {"/welcome/home"} ><UserHome /></PrivateRoute>
-      <PrivateRoute path = {"/welcome/ck5"} ><Complaint /></PrivateRoute>
-      <PrivateRoute path = {"/welcome/ck4"} ><Complaintck4 /></PrivateRoute>
-      <PrivateRoute path = {"/welcome/tinymce"} ><Complainttiny /></PrivateRoute>
-      <PrivateRoute path = {"/welcome/allcomplaint"} ><AllComplaints /></PrivateRoute>
+        <PrivateRoute path = {"/welcome/home"} ><UserHome /></PrivateRoute>
+        <PrivateRoute path = {"/welcome/ck5"} ><Complaint /></PrivateRoute>
+        <PrivateRoute path = {"/welcome/ck4"} ><Complaintck4 /></PrivateRoute>
+        <PrivateRoute path = {"/welcome/tinymce"} ><Complainttiny /></PrivateRoute>
+        <PrivateRoute path = {"/welcome/allcomplaint"} ><AllComplaints /></PrivateRoute>
       </div>
-      <div><Footer /></div>
+      <footer><Footer /></footer>
       </div>
   );
 }
