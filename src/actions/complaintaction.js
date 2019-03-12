@@ -1,11 +1,8 @@
 import Promise from 'es6-promise';
 import { read_cookie } from 'sfcookies'
 
-const accessToken = read_cookie('json_response')
-const bearer = 'Bearer '+accessToken;
-const register={
-  userName:read_cookie('name'),
-}
+const bearer = 'Bearer '+ read_cookie('json_response');
+
 function setComplaintSuccess(isComplaintSuccess)
 {
     return{
@@ -48,11 +45,12 @@ function setUpdateError(updateError)
       updateError
     };
 }
-export function Complaints(complaint,summary){
+export function Complaints(complaint,summary,register){
   console.log('test summary',summary);
+  console.log('from actions bearer',bearer)
     return dispatch => {
       dispatch(setComplaintSuccess(false));
-      ComplaintRequest(complaint,summary)
+      ComplaintRequest(complaint,summary,register)
       .then(success =>{
         dispatch(setComplaintSuccess(true));
       })
@@ -73,10 +71,10 @@ export function deleteComplaint(id){
       })
     }
 }
-export function updateComplaint(id,complaint,summary){
+export function updateComplaint(id,complaint,summary,register){
     return dispatch => {
       dispatch(setUpdateSucess(false));
-      updateRequest(id,complaint,summary)
+      updateRequest(id,complaint,summary,register)
       .then(sucess =>{
         dispatch(setUpdateSucess(true));
       })
@@ -90,7 +88,7 @@ function deleteRequest(id){
   fetch('http://localhost:8080/complaint/delete', {
      method: 'post',
      headers: {
-       'Authorization': bearer,
+       'Authorization': 'Bearer '+read_cookie('json_response'),
        'Content-Type':'application/json'},
      body: JSON.stringify({
       "complaint_id": id
@@ -106,12 +104,12 @@ function deleteRequest(id){
  });
 })
 }
-function updateRequest(id,complaint,summary){
+function updateRequest(id,complaint,summary,register){
   return new Promise((resolve,reject) =>{
   fetch('http://localhost:8080/complaint/update', {
      method: 'post',
      headers: {
-       'Authorization': bearer,
+       'Authorization': 'Bearer '+read_cookie('json_response'),
        'Content-Type':'application/json'},
      body: JSON.stringify({
       "complaint_id": id,
@@ -131,13 +129,14 @@ function updateRequest(id,complaint,summary){
  });
 })
 }
-function ComplaintRequest(complaint,summary){
+function ComplaintRequest(complaint,summary,register){
   return new Promise((resolve,reject) =>{
-    console.log(complaint,summary,'...',bearer);
+    console.log('...','Bearer ',read_cookie('json_response'),bearer);
+    console.log('register',register);
   fetch('http://localhost:8080/complaint', {
    method: 'post',
    headers: {
-     'Authorization': bearer,
+     'Authorization':'Bearer '+read_cookie('json_response'),
      'Content-Type':'application/json'},
    body: JSON.stringify({
     "complaint": complaint,

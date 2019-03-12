@@ -1,13 +1,10 @@
 import React from 'react';
-import ScrollArea from 'react-scrollbar';
 import { read_cookie,bake_cookie,delete_cookie } from 'sfcookies';
 import { connect } from 'react-redux';
-import { Markup } from 'interweave';
 import { deleteComplaint } from "../../actions/complaintaction";
-import Complaint from "./Complaint";
-import {Link,Redirect} from "react-router-dom";
-import Popup from 'reactjs-popup';
+import {Redirect} from "react-router-dom";
 import Complaintview from "./viewComplaint";
+
 
 class AllComplaints extends React.Component{
   constructor(props){
@@ -15,11 +12,12 @@ class AllComplaints extends React.Component{
     this.state= {
       complaints:[],
       isLoaded:false,
-      viewopen: false,
+      viewopenck: false,
+      viewopentiny: false,
       error :false
     }
   }
-  componentDidMount(){
+  getcomplaints=()=>{
     const accessToken = read_cookie('json_response')
     const bearer = 'Bearer '+accessToken;
     const name = read_cookie('name');
@@ -55,13 +53,21 @@ class AllComplaints extends React.Component{
             error:true,
           })
       });
+
+  }
+  componentWillMount(){
+    this.getcomplaints()
   }
   onclick=(e)=>{
     e.preventDefault();
     console.log(e.target.id);
-    this.props.deleteComplaint(e.target.id);
+    var retVal = window.confirm("Do you want to delete complaint ?");
+    if( retVal === true ) {
+      this.props.deleteComplaint(e.target.id);
+    }
+
   }
-  handleView=(e)=>{
+  handleViewck=(e)=>{
     e.preventDefault();
     var data = this.state.complaints.filter(complaint => complaint.complaint === e.target.id);
     var id = data[0].complaint_id;
@@ -70,32 +76,54 @@ class AllComplaints extends React.Component{
     localStorage.setItem('complaint',e.target.id);
     localStorage.setItem('summary',summary);
     console.log("data from localStorage",localStorage.getItem('summary'));
-    this.setState({ viewopen: true });
-
-    // this.props.onView(e.target.id);
+    this.setState({ viewopenck: true });
+    this.props.viewopen();
+  }
+  handleViewtiny=(e)=>{
+    e.preventDefault();
+    var data = this.state.complaints.filter(complaint => complaint.complaint === e.target.id);
+    var id = data[0].complaint_id;
+    var summary = data[0].summary;
+    bake_cookie('complaint_id',id);
+    localStorage.setItem('complaint',e.target.id);
+    localStorage.setItem('summary',summary);
+    console.log("data from localStorage",localStorage.getItem('summary'));
+    this.setState({ viewopentiny: true });
+    this.props.viewopen();
+  }
+  load=()=>{
+    console.log('load called');
+    this.setState({
+      isLoaded:false,
+    })
   }
   render(){
-    var {isLoaded,complaints,viewopen,error} = this.state;
+    var {isLoaded,complaints,viewopenck,viewopentiny,error} = this.state;
     var obj = [...this.state.complaints];
       return (
-
-        <ScrollArea horizontal={false}>
-          <div className = 'allcomplaints'>
-          {viewopen&&console.log('view',this.state.viewopen)}
-          {viewopen&&<Redirect to= "/welcome/tinymce"/>}
+        <div>
+        {isLoaded ?
+        <div className = 'allcomplaints'>
+          {console.log('view',this.state.viewopen)}
+          {viewopenck&&<Redirect to= "/welcome/ck4"/>}
+          {viewopentiny&&<Redirect to= "/welcome/tinymce"/>}
+          {error&&alert('session expired')}
           {error&&this.props.logout()}
           {error&&<Redirect to= "/error"/>}
+          {this.props.isDeleteSuccess&&this.load()}
           {this.props.isDeleteSuccess&&alert('complaint Successfully deleted')}
-          {this.props.isDeleteSuccess&& <div>{window.location.reload()}</div>}
+          {this.props.isDeleteSuccess&&this.props.viewopen()}
           {complaints.length?
-        <div>
-        {obj.sort((a,b)=>(a.complaint_id<b.complaint_id)?1:-1).map(complaint=>(
-          <Complaintview Id ={complaint.complaint_id}  Summary = {complaint.summary}complaint = {complaint.complaint} onDelete = {this.onclick} onView ={this.handleView} />
-        ))}</div>
-          : <h1 align="center">No complaints Registered</h1>}
-        </div>
-        </ScrollArea>
-
+          <div>
+            {obj.sort((a,b)=>(a.complaint_id<b.complaint_id)?1:-1).map(complaint=>(
+              <Complaintview key={complaint.complaint_id} Id ={complaint.complaint_id}  Summary = {complaint.summary}complaint = {complaint.complaint} onDelete = {this.onclick} onViewck ={this.handleViewck} onViewtiny ={this.handleViewtiny} />
+            ))}
+          </div>: <h1 align="center">No complaints Registered</h1>}
+        </div>:
+        <div className="loader1">
+          {this.getcomplaints()}
+        </div>}
+      </div>
       );
 }
 }
@@ -113,6 +141,15 @@ const mapDispatchToProps = (dispatch)=> {
        bake_cookie('login',false);
        delete_cookie('json_response');
        const action ={type:'LOGOUT_SUCESS',isLogoutSuccess : true};
+       dispatch(action);
+     },
+     falsedelete:()=>{
+       console.log('deletesucess false')
+       const action ={type:'DELETE_SUCCESS',isDeleteSuccess : false};
+       dispatch(action);
+     },
+     viewopen:()=>{
+       const action ={type:'REFRESH'};
        dispatch(action);
      }
   }

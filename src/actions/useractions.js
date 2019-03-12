@@ -1,5 +1,5 @@
 import Promise from 'es6-promise';
-import { bake_cookie ,read_cookie } from 'sfcookies';
+import { bake_cookie } from 'sfcookies';
 function setLoginPending(isLoginPending)
 {
     return{
@@ -58,23 +58,9 @@ function sendLoginRequest(name,password){
       }).then(json=>{
         console.log("respone json",json);
         bake_cookie('json_response',json.accessToken);
-        const accessToken = read_cookie('json_response')
-        const bearer = 'Bearer '+accessToken;
-        fetch('http://localhost:8080/name', {
-          method: 'POST',
-          headers: {
-              'Authorization': bearer,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-             "username": name})
-          }).then(res=>{
-              return resolve(true);}
-            )
-        })
-      .catch((error) => {
-      //message: 'Something bad happened ' + error
-
-      });
+        return resolve(true);
+      }).catch((error) => {
+      return reject(new Error('Connection Refused'));
   });
+});
 }

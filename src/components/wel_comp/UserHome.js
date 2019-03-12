@@ -1,12 +1,15 @@
 import React from 'react';
-import { read_cookie } from 'sfcookies';
+import {Link} from "react-router-dom";
 
 function UserHome(props){
-  const name=read_cookie('name');
   return (
     <div style={{marginBottom:'485px'}}>
-    <h1 align='center'>Hi, {name}!!</h1>
-    <h1 align='center'>this is home page</h1>
+
+    <ul>
+      <li className='li'>Edit through<Link to='/welcome/ck4'> ckeditor</Link></li>
+      <li className='li'>Edit through<Link to='/welcome/tinymce'> Tiny-mce</Link></li>
+    </ul>
+
     </div>
   );
 }
